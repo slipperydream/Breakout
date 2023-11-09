@@ -1,0 +1,25 @@
+[gd_scene load_steps=7 format=3 uid="uid://cwq71p5451a1g"]
+
+[ext_resource type="Script" path="res://Ball.gd" id="1_eeji2"]
+[ext_resource type="AudioStream" uid="uid://b14i6kkwvf4p" path="res://sounds/ping_pong_8bit_beeep.ogg" id="2_q6apq"]
+[ext_resource type="Texture2D" uid="uid://b8bxkijwgy5jv" path="res://icon.svg" id="2_xq0xj"]
+[ext_resource type="AudioStream" uid="uid://du2ynytvvwa6y" path="res://sounds/ping_pong_8bit_peeeeeep.ogg" id="3_ooj4p"]
+[ext_resource type="AudioStream" uid="uid://cokyrok3vfldu" path="res://sounds/ping_pong_8bit_plop.ogg" id="4_iucj3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l7bt3"]
+size = Vector2(31, 32)
+
+[node name="Ball" type="CharacterBody2D" groups=["ball"]]
+position = Vector2(550, 300)
+script = ExtResource("1_eeji2")
+hit_sounds = Array[AudioStreamOggVorbis]([ExtResource("2_q6apq"), ExtResource("3_ooj4p"), ExtResource("4_iucj3")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_xq0xj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_l7bt3")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
