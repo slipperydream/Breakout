@@ -26,6 +26,7 @@ var score : int = 0
 var max_lives : int = 3
 var lives : int = 0
 var current_state = state.WAITING
+var bricks_broken
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -35,8 +36,8 @@ func _ready():
 func check_for_win():
 	await get_tree().create_timer(0.5).timeout
 	var win = false
-	var count = get_tree().get_nodes_in_group("bricks").size()
-	if count <= 0:
+	
+	if bricks_broken >= rows * bricks_per_row:
 		win = true
 	if win:
 		emit_signal("game_won")
@@ -101,6 +102,7 @@ func _on_main_menu_play_game():
 	paddle.computer_controlled = false
 	
 func create_board():
+	bricks_broken = 0
 	for row in rows:
 		for num in bricks_per_row:
 			var new_brick = brick_scene.instantiate()
@@ -147,6 +149,8 @@ func _on_settings_num_rows_updated(value):
 		
 func _on_brick_broken(value):
 	update_score(value)
+	bricks_broken += 1
+	check_for_win()
 	
 func update_score(value):
 	score += value
