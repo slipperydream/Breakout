@@ -1,20 +1,25 @@
-[gd_scene load_steps=9 format=3 uid="uid://f6w17qq6ebqe"]
+[gd_scene load_steps=10 format=3 uid="uid://f6w17qq6ebqe"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_frkra"]
-[ext_resource type="PackedScene" uid="uid://dcg4cvvi52kut" path="res://wall.tscn" id="2_644n0"]
-[ext_resource type="PackedScene" uid="uid://cwq71p5451a1g" path="res://ball.tscn" id="3_8lswj"]
+[ext_resource type="PackedScene" uid="uid://dcg4cvvi52kut" path="res://entities/wall.tscn" id="2_644n0"]
+[ext_resource type="PackedScene" uid="uid://cemk8wjips1m0" path="res://entities/brick.tscn" id="2_x2dpb"]
+[ext_resource type="PackedScene" uid="uid://cwq71p5451a1g" path="res://entities/ball.tscn" id="3_8lswj"]
 [ext_resource type="PackedScene" uid="uid://dq5keub5rdyqu" path="res://ui/ui.tscn" id="5_ipaef"]
 [ext_resource type="PackedScene" uid="uid://bgokopw8g8rdh" path="res://ui/main_menu.tscn" id="6_ca54l"]
-[ext_resource type="PackedScene" uid="uid://dsjd18st25fq5" path="res://player/paddle.tscn" id="7_s3pbu"]
+[ext_resource type="PackedScene" uid="uid://dsjd18st25fq5" path="res://entities/player/paddle.tscn" id="7_s3pbu"]
 [ext_resource type="PackedScene" uid="uid://ew0clqkufdnm" path="res://ui/settings.tscn" id="7_sl7wu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1nhf6"]
-size = Vector2(1158, 20)
+size = Vector2(1285, 130)
 
 [node name="Main" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_frkra")
+brick_scene = ExtResource("2_x2dpb")
+rows = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 1
 
 [node name="background" type="ColorRect" parent="CanvasLayer"]
 anchors_preset = 15
@@ -24,18 +29,28 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.137255, 0.137255, 0.137255, 1)
 
-[node name="TopWall" parent="CanvasLayer" instance=ExtResource("2_644n0")]
-position = Vector2(0, 36)
-
 [node name="RightWall" parent="CanvasLayer" instance=ExtResource("2_644n0")]
+position = Vector2(1154, 59)
+rotation = 1.5708
+scale = Vector2(0.51, 0.5)
+
+[node name="LeftWall" parent="CanvasLayer" instance=ExtResource("2_644n0")]
+position = Vector2(13, 60)
+rotation = 1.5708
+scale = Vector2(0.51, 0.5)
+
+[node name="TopWall" parent="CanvasLayer" groups=["ceiling"] instance=ExtResource("2_644n0")]
+position = Vector2(0, 43)
+scale = Vector2(1, 0.8)
 
 [node name="Bottom" type="Area2D" parent="CanvasLayer"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Bottom"]
-position = Vector2(569, 658)
+position = Vector2(569, 702)
 shape = SubResource("RectangleShape2D_1nhf6")
 
 [node name="Ball" parent="CanvasLayer" instance=ExtResource("3_8lswj")]
+position = Vector2(550, 500)
 
 [node name="UI" parent="CanvasLayer" instance=ExtResource("5_ipaef")]
 
@@ -43,23 +58,36 @@ shape = SubResource("RectangleShape2D_1nhf6")
 offset_top = -82.5
 offset_bottom = 82.5
 
-[node name="Settings" parent="CanvasLayer" instance=ExtResource("7_sl7wu")]
+[node name="Settings" parent="CanvasLayer" groups=["main"] instance=ExtResource("7_sl7wu")]
 visible = false
 
 [node name="Paddle" parent="CanvasLayer" instance=ExtResource("7_s3pbu")]
+position = Vector2(568, 605)
 
 [node name="AttractModeTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
+[connection signal="ball_lost" from="." to="." method="_on_ball_lost"]
+[connection signal="ball_lost" from="." to="CanvasLayer/UI" method="_on_main_ball_lost"]
 [connection signal="game_over" from="." to="." method="_on_game_over"]
 [connection signal="game_over" from="." to="CanvasLayer/UI" method="_on_main_game_over"]
+[connection signal="game_won" from="." to="." method="_on_game_won"]
+[connection signal="game_won" from="." to="CanvasLayer/Ball" method="_on_main_game_won"]
+[connection signal="game_won" from="." to="CanvasLayer/UI" method="_on_main_game_won"]
 [connection signal="new_game" from="." to="CanvasLayer/UI" method="_on_main_new_game"]
 [connection signal="paused" from="." to="CanvasLayer/UI" method="_on_main_paused"]
 [connection signal="reset" from="." to="CanvasLayer/UI" method="_on_main_reset"]
+[connection signal="reset" from="." to="CanvasLayer/Paddle" method="_on_main_reset"]
 [connection signal="score_changed" from="." to="CanvasLayer/UI" method="_on_main_score_changed"]
+[connection signal="body_entered" from="CanvasLayer/Bottom" to="." method="_on_bottom_body_entered"]
+[connection signal="hit_ceiling" from="CanvasLayer/Ball" to="CanvasLayer/Paddle" method="_on_ball_hit_ceiling"]
+[connection signal="out_of_bounds" from="CanvasLayer/Ball" to="." method="_on_ball_out_of_bounds"]
 [connection signal="countdown_done" from="CanvasLayer/UI" to="." method="_on_ui_countdown_done"]
 [connection signal="open_settings" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_open_settings"]
 [connection signal="play_game" from="CanvasLayer/MainMenu" to="." method="_on_main_menu_play_game"]
+[connection signal="num_rows_updated" from="CanvasLayer/Settings" to="." method="_on_settings_num_rows_updated"]
+[connection signal="paddle_color" from="CanvasLayer/Settings" to="CanvasLayer/Paddle" method="_on_settings_paddle_color"]
+[connection signal="sensitivity_updated" from="CanvasLayer/Settings" to="CanvasLayer/Paddle" method="_on_settings_sensitivity_updated"]
 [connection signal="settings_closed" from="CanvasLayer/Settings" to="." method="_on_settings_settings_closed"]
 [connection signal="timeout" from="AttractModeTimer" to="." method="_on_attract_mode_timer_timeout"]

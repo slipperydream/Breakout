@@ -15,6 +15,10 @@ run/main_scene="res://main.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+HighScoreSystem="*res://utility/high_score_system.tscn"
+
 [display]
 
 window/stretch/mode="canvas_items"

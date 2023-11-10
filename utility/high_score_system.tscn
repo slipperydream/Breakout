@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ktk1qr4hddk5"]
+
+[ext_resource type="Script" path="res://utility/HighScoreSystem.gd" id="1_nwcbc"]
+
+[node name="HighScoreComponent" type="Node2D"]
+script = ExtResource("1_nwcbc")
+high_score_file = "user://scores.sav"

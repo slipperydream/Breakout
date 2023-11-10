@@ -2,6 +2,9 @@ extends CharacterBody2D
 
 class_name Ball
 
+signal out_of_bounds
+signal hit_ceiling
+
 @export var max_speed : int = 250
 @onready var screen_size : Vector2 = get_viewport_rect().size
 @onready var sound_player = $AudioStreamPlayer2D
@@ -22,12 +25,22 @@ func _physics_process(delta):
 			velocity = velocity.normalized() * max_speed
 		else:
 			velocity = velocity.bounce(collision.get_normal())
+			if collider is Brick:
+				velocity.x *= 1.1
+				velocity.y *= 1.1
+			elif collider.is_in_group("ceiling"):
+				emit_signal("hit_ceiling")
 		if collider.has_method("hit"):
 			collider.hit()
-
+	if global_position.x < 0 or global_position.x > screen_size.x:
+		emit_signal("out_of_bounds")
+		
 func reset():
-	global_position =  Vector2(screen_size.x/2, screen_size.y/2)
-	var vel_x = randi_range(-0.5,.5) * max_speed
+	global_position =  Vector2(screen_size.x/2, screen_size.y * 0.7)
+	velocity = Vector2.ZERO
+
+func start_moving():
+	var vel_x = randi_range(-0.2,.2) * max_speed
 	var vel_y = max_speed
 	velocity = Vector2(vel_x, vel_y)
 
@@ -37,5 +50,5 @@ func play_hit():
 	sound_player.stream = sound
 	sound_player.play()
 
-
-
+func _on_main_game_won():
+	velocity = Vector2.ZERO

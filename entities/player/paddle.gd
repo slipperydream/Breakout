@@ -3,10 +3,11 @@ extends CharacterBody2D
 class_name Paddle 
 
 @export var speed : int = 5
-@export var buffer : int = 80
+@export var buffer : int = 50
 @onready var paddle_width = $Sprite2D.texture.get_width()
 @onready var screen_size : Vector2 = get_viewport_rect().size
 @onready var ball = get_tree().get_first_node_in_group("ball")
+@onready var sensitivity : float = 1
 
 var horz_speed = 0
 var computer_controlled : bool = false
@@ -16,7 +17,7 @@ func _ready():
 
 func get_input():
 	var input_dir = Input.get_axis("left", "right")
-	horz_speed = input_dir * speed
+	horz_speed = input_dir * speed * sensitivity
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
@@ -40,6 +41,8 @@ func hit():
 	
 func reset():
 	global_position = Vector2(screen_size.x/2, screen_size.y - buffer)
+	$Sprite2D.scale.x = 1
+	$CollisionShape2D.scale.x = 1
 
 func _on_main_reset():
 	reset()
@@ -64,3 +67,13 @@ func get_color(value):
 			return Color.ORANGE
 		"WHITE":
 			return Color.WHITE
+
+func _on_settings_sensitivity_updated(value):
+	sensitivity = value
+
+func _on_ball_hit_ceiling():
+	$Sprite2D.scale.x -= 0.1
+	$Sprite2D.scale.x = max(0.5, $Sprite2D.scale.x)
+	$CollisionShape2D.scale.x -= 0.1
+	$CollisionShape2D.scale.x = max(0.5, $CollisionShape2D.scale.x)
+	

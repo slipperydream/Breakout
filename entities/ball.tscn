@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cwq71p5451a1g"]
 
-[ext_resource type="Script" path="res://Ball.gd" id="1_eeji2"]
+[ext_resource type="Script" path="res://entities/Ball.gd" id="1_eeji2"]
 [ext_resource type="AudioStream" uid="uid://b14i6kkwvf4p" path="res://sounds/ping_pong_8bit_beeep.ogg" id="2_q6apq"]
 [ext_resource type="Texture2D" uid="uid://b8bxkijwgy5jv" path="res://icon.svg" id="2_xq0xj"]
 [ext_resource type="AudioStream" uid="uid://du2ynytvvwa6y" path="res://sounds/ping_pong_8bit_peeeeeep.ogg" id="3_ooj4p"]
