@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bssskmjdo40ix"]
+
+[ext_resource type="Script" path="res://levels/level3.gd" id="1_w0px5"]
+
+[resource]
+script = ExtResource("1_w0px5")

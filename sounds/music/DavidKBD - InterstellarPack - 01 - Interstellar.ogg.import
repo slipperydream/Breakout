@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://02xi2g5d7uo5"
+path="res://.godot/imported/DavidKBD - InterstellarPack - 01 - Interstellar.ogg-438956c69e6a7dcd4b009a3195a370f4.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/music/DavidKBD - InterstellarPack - 01 - Interstellar.ogg"
+dest_files=["res://.godot/imported/DavidKBD - InterstellarPack - 01 - Interstellar.ogg-438956c69e6a7dcd4b009a3195a370f4.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

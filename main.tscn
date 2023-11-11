@@ -1,13 +1,22 @@
-[gd_scene load_steps=10 format=3 uid="uid://f6w17qq6ebqe"]
+[gd_scene load_steps=19 format=3 uid="uid://f6w17qq6ebqe"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_frkra"]
 [ext_resource type="PackedScene" uid="uid://dcg4cvvi52kut" path="res://entities/wall.tscn" id="2_644n0"]
+[ext_resource type="Resource" uid="uid://5xn7lxsrcpq1" path="res://levels/Level1.tres" id="2_wgt6q"]
 [ext_resource type="PackedScene" uid="uid://cemk8wjips1m0" path="res://entities/brick.tscn" id="2_x2dpb"]
 [ext_resource type="PackedScene" uid="uid://cwq71p5451a1g" path="res://entities/ball.tscn" id="3_8lswj"]
+[ext_resource type="Resource" uid="uid://bjr2tsjexdl42" path="res://levels/Level2.tres" id="3_qegv4"]
+[ext_resource type="Resource" uid="uid://bssskmjdo40ix" path="res://levels/Level3.tres" id="4_fa8tk"]
+[ext_resource type="Resource" uid="uid://bw5dvdjslaprl" path="res://levels/Level4.tres" id="5_barmj"]
 [ext_resource type="PackedScene" uid="uid://dq5keub5rdyqu" path="res://ui/ui.tscn" id="5_ipaef"]
 [ext_resource type="PackedScene" uid="uid://bgokopw8g8rdh" path="res://ui/main_menu.tscn" id="6_ca54l"]
+[ext_resource type="Resource" uid="uid://cm7x5g12lpmnd" path="res://levels/Level5.tres" id="6_v17cr"]
 [ext_resource type="PackedScene" uid="uid://dsjd18st25fq5" path="res://entities/player/paddle.tscn" id="7_s3pbu"]
 [ext_resource type="PackedScene" uid="uid://ew0clqkufdnm" path="res://ui/settings.tscn" id="7_sl7wu"]
+[ext_resource type="Resource" uid="uid://c7i0qbssr5736" path="res://levels/Level6.tres" id="7_v4tcb"]
+[ext_resource type="Resource" uid="uid://ccm2j4bq5vd7n" path="res://levels/Level7.tres" id="8_srydy"]
+[ext_resource type="Resource" uid="uid://cmqgyur05fycw" path="res://levels/Level8.tres" id="9_ptlf0"]
+[ext_resource type="Resource" uid="uid://bn1yjc3w5kdts" path="res://levels/Level9.tres" id="10_ks4u4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1nhf6"]
 size = Vector2(1285, 130)
@@ -15,6 +24,7 @@ size = Vector2(1285, 130)
 [node name="Main" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_frkra")
+levels = Array[Resource("res://levels/level.gd")]([ExtResource("2_wgt6q"), ExtResource("3_qegv4"), ExtResource("4_fa8tk"), ExtResource("5_barmj"), ExtResource("6_v17cr"), ExtResource("7_v4tcb"), ExtResource("8_srydy"), ExtResource("9_ptlf0"), ExtResource("10_ks4u4")])
 brick_scene = ExtResource("2_x2dpb")
 rows = 1
 

@@ -4,23 +4,22 @@ class_name Brick
 
 signal brick_broken
 
-@export var base_points : int = 1
+@export var points : int = 1
 @onready var main = get_tree().get_first_node_in_group("main")
-var row : int = 1
 var hp : int = 1
 
 func hit():
 	hp -= 1
 	if hp <= 0:
-		emit_signal("brick_broken", base_points * row)
+		emit_signal("brick_broken", points)
 		queue_free()
 	else:
 		var tween = create_tween()
 		tween.tween_property($Sprite2D, "modulate.a", 55, 0.3)
 		tween.tween_property($Sprite2D, "modulate.a", 255, 0.3)
 
-func start(in_row, color, pos, num):
+func start(color, pos, row, num):
 	$Sprite2D.modulate = color
-	row = in_row + 1
 	global_position = pos
+	points = row + 1
 	$Label.text = str(num)
